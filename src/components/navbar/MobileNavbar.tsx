@@ -13,9 +13,7 @@ import Logo from "../Logo";
 import NavbarItem from "./NavbarItem";
 import EndNavbarSection from "./EndNavbarSection";
 
-type Props = {};
-
-const MobileNavbar: React.FC<Props> = ({}) => {
+const MobileNavbar = ({}) => {
   const [isOpened, setIsOpened] = useState(false);
   return (
     <div className="block border-separate bg-background md:hidden">
