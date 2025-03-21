@@ -9,17 +9,23 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { addressCompact, getExplorerUrl } from "@/lib/utils";
+import useIssueRoleNft from "@/hooks/useIssueRoleNft";
+import { NFTRole } from "@/lib/constants";
 type Props = {
   to: string;
   disabled?: boolean;
 };
 const IssueRoleNftButton: React.FC<Props> = ({ to, disabled }) => {
   const [open, setOpen] = useState(false);
+  const { mutate } = useIssueRoleNft(to);
 
-  const handlerIssueRoleNft = useCallback(() => {
-    alert(`Issuing role NFT to ${to}`);
-    setOpen(false);
-  }, [to]);
+  const handlerIssueRoleNft = useCallback(
+    (role: NFTRole) => {
+      mutate({ role });
+      setOpen(false);
+    },
+    [mutate]
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -44,8 +50,12 @@ const IssueRoleNftButton: React.FC<Props> = ({ to, disabled }) => {
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center w-full gap-4">
-          <Button onClick={handlerIssueRoleNft}>MINTER ROLE</Button>
-          <Button onClick={handlerIssueRoleNft}>CONSUMER ROLE</Button>
+          <Button onClick={() => handlerIssueRoleNft(NFTRole.MINTER)}>
+            MINTER ROLE
+          </Button>
+          <Button onClick={() => handlerIssueRoleNft(NFTRole.CONSUMER)}>
+            CONSUMER ROLE
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

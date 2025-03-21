@@ -14,3 +14,8 @@ export const NAVBAR_ITEMS: NavbarItemType[] = [
     link: "/consumer",
   },
 ];
+
+export enum NFTRole {
+  MINTER = "MINTER",
+  CONSUMER = "CONSUMER",
+}
