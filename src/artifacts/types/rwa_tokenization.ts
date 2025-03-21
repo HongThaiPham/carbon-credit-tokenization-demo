@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/rwa_tokenization.json`.
  */
 export type RwaTokenization = {
-  "address": "8FLX8HXQBXwtzsoxEQBgcsECzfipmGycjYuWrcXEDaYn",
+  "address": "Ae4Kt2dtTVNi2H4qgsoD3u1a7K5yjxZUaVVt1XPviMsv",
   "metadata": {
     "name": "rwaTokenization",
     "version": "0.1.0",
@@ -259,25 +259,22 @@ export type RwaTokenization = {
         {
           "name": "authority",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "configAccount"
-          ]
+          "signer": true
         },
         {
-          "name": "configAccount",
+          "name": "consumerController",
+          "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
+                  99
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
               }
             ]
           }
@@ -404,25 +401,22 @@ export type RwaTokenization = {
         {
           "name": "authority",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "configAccount"
-          ]
+          "signer": true
         },
         {
-          "name": "configAccount",
+          "name": "minterController",
+          "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
+                  109
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
               }
             ]
           }
@@ -557,19 +551,18 @@ export type RwaTokenization = {
           "signer": true
         },
         {
-          "name": "configAccount",
+          "name": "minterController",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
+                  109
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "minterNftMint"
               }
             ]
           }
@@ -963,25 +956,21 @@ export type RwaTokenization = {
         {
           "name": "authority",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "configAccount"
-          ]
+          "signer": true
         },
         {
-          "name": "configAccount",
+          "name": "minterController",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
+                  109
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
               }
             ]
           }
@@ -1005,7 +994,10 @@ export type RwaTokenization = {
                 "path": "receiver"
               }
             ]
-          }
+          },
+          "relations": [
+            "minterController"
+          ]
         },
         {
           "name": "tokenProgram",
@@ -1021,6 +1013,19 @@ export type RwaTokenization = {
     }
   ],
   "accounts": [
+    {
+      "name": "consumerController",
+      "discriminator": [
+        45,
+        211,
+        177,
+        38,
+        29,
+        146,
+        215,
+        169
+      ]
+    },
     {
       "name": "governanceConfig",
       "discriminator": [
@@ -1045,6 +1050,19 @@ export type RwaTokenization = {
         237,
         76,
         128
+      ]
+    },
+    {
+      "name": "minterController",
+      "discriminator": [
+        245,
+        95,
+        65,
+        190,
+        225,
+        54,
+        39,
+        54
       ]
     }
   ],
@@ -1074,6 +1092,26 @@ export type RwaTokenization = {
     }
   ],
   "types": [
+    {
+      "name": "consumerController",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
     {
       "name": "governanceConfig",
       "type": {
@@ -1112,6 +1150,26 @@ export type RwaTokenization = {
             "type": {
               "option": "pubkey"
             }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "minterController",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
           },
           {
             "name": "bump",

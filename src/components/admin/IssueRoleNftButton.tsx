@@ -11,20 +11,25 @@ import {
 import { addressCompact, getExplorerUrl } from "@/lib/utils";
 import useIssueRoleNft from "@/hooks/useIssueRoleNft";
 import { NFTRole } from "@/lib/constants";
+import { useQueryClient } from "@tanstack/react-query";
 type Props = {
   to: string;
   disabled?: boolean;
 };
 const IssueRoleNftButton: React.FC<Props> = ({ to, disabled }) => {
   const [open, setOpen] = useState(false);
-  const { mutate } = useIssueRoleNft(to);
+  const { mutateAsync } = useIssueRoleNft(to);
+  const queryClient = useQueryClient();
 
   const handlerIssueRoleNft = useCallback(
-    (role: NFTRole) => {
-      mutate({ role });
+    async (role: NFTRole) => {
+      await mutateAsync({ role });
       setOpen(false);
+      await queryClient.invalidateQueries({
+        queryKey: ["userRoleAccounts", role],
+      });
     },
-    [mutate]
+    [mutateAsync, queryClient]
   );
 
   return (

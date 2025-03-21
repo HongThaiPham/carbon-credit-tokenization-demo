@@ -1,5 +1,5 @@
 {
-  "address": "8FLX8HXQBXwtzsoxEQBgcsECzfipmGycjYuWrcXEDaYn",
+  "address": "Ae4Kt2dtTVNi2H4qgsoD3u1a7K5yjxZUaVVt1XPviMsv",
   "metadata": {
     "name": "rwa_tokenization",
     "version": "0.1.0",
@@ -181,16 +181,20 @@
         {
           "name": "authority",
           "writable": true,
-          "signer": true,
-          "relations": ["config_account"]
+          "signer": true
         },
         {
-          "name": "config_account",
+          "name": "consumer_controller",
+          "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [99]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
               }
             ]
           }
@@ -277,16 +281,20 @@
         {
           "name": "authority",
           "writable": true,
-          "signer": true,
-          "relations": ["config_account"]
+          "signer": true
         },
         {
-          "name": "config_account",
+          "name": "minter_controller",
+          "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [109]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
               }
             ]
           }
@@ -381,12 +389,16 @@
           "signer": true
         },
         {
-          "name": "config_account",
+          "name": "minter_controller",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [109]
+              },
+              {
+                "kind": "account",
+                "path": "minter_nft_mint"
               }
             ]
           }
@@ -634,16 +646,19 @@
         {
           "name": "authority",
           "writable": true,
-          "signer": true,
-          "relations": ["config_account"]
+          "signer": true
         },
         {
-          "name": "config_account",
+          "name": "minter_controller",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [109]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
               }
             ]
           }
@@ -665,7 +680,8 @@
                 "path": "receiver"
               }
             ]
-          }
+          },
+          "relations": ["minter_controller"]
         },
         {
           "name": "token_program",
@@ -682,12 +698,20 @@
   ],
   "accounts": [
     {
+      "name": "ConsumerController",
+      "discriminator": [45, 211, 177, 38, 29, 146, 215, 169]
+    },
+    {
       "name": "GovernanceConfig",
       "discriminator": [81, 63, 124, 107, 210, 100, 145, 70]
     },
     {
       "name": "MintAuthority",
       "discriminator": [148, 0, 219, 228, 254, 237, 76, 128]
+    },
+    {
+      "name": "MinterController",
+      "discriminator": [245, 95, 65, 190, 225, 54, 39, 54]
     }
   ],
   "errors": [
@@ -716,6 +740,26 @@
     }
   ],
   "types": [
+    {
+      "name": "ConsumerController",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
     {
       "name": "GovernanceConfig",
       "type": {
@@ -754,6 +798,26 @@
             "type": {
               "option": "pubkey"
             }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MinterController",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
           },
           {
             "name": "bump",

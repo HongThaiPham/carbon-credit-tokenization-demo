@@ -11,10 +11,11 @@ const useIssueRoleNft = (to: string) => {
   return useMutation({
     mutationKey: ["issueRoleNft", to],
     mutationFn: async ({ role }: UseIssueRoleNftParams) => {
-      toast.promise(
+      return toast.promise(
         new Promise(async (resolve, reject) => {
           try {
             if (role === NFTRole.MINTER) {
+              console.info("Issuing MINTER role NFT...");
               const result = await program.methods
                 .issueMinterCert(
                   MINTER_ROLE_NFT_METADATA.name,
@@ -29,6 +30,7 @@ const useIssueRoleNft = (to: string) => {
               resolve(result);
             }
             else {
+              console.info("Issuing CONSUMER role NFT...");
               const result = await program.methods
                 .issueConsumerCert(
                   CONSUMER_ROLE_NFT_METADATA.name,

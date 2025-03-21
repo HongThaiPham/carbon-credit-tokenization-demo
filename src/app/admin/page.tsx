@@ -1,13 +1,15 @@
 import IssueNftForm from "@/components/admin/IssueNftForm";
+import UserRoleAccounts from "@/components/admin/UserRoleAccounts";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { NFTRole } from "@/lib/constants";
 import { Plus, Settings, Users } from "lucide-react";
 import React from "react";
 
 const AdminPage = () => {
   return (
-    <div className="container mx-auto py-5 space-y-6">
+    <div className="container mx-auto p-8 space-y-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -42,14 +44,8 @@ const AdminPage = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            {["Minters", "Consumers"].map((role) => (
-              <div
-                key={role}
-                className="flex justify-between items-center p-2 bg-muted rounded-md"
-              >
-                <span className="font-medium">{role}</span>
-                <span className="text-muted-foreground">0 active</span>
-              </div>
+            {[NFTRole.MINTER, NFTRole.CONSUMER].map((role) => (
+              <UserRoleAccounts role={role} key={role} />
             ))}
           </div>
         </CardContent>
