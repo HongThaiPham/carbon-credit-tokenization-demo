@@ -1,5 +1,5 @@
 {
-  "address": "3iSipiR8nmukvNan7ZWDJ2Cx7V7EmHPXLkQmsN1nrEna",
+  "address": "6EKeiVFzZQuo85Ft72nyTQ2vFM5iTGE3fxxvt2LkMvV4",
   "metadata": {
     "name": "token_transfer_hook",
     "version": "0.1.0",
@@ -9,16 +9,7 @@
   "instructions": [
     {
       "name": "execute",
-      "discriminator": [
-        105,
-        37,
-        101,
-        197,
-        75,
-        251,
-        102,
-        26
-      ],
+      "discriminator": [105, 37, 101, 197, 75, 251, 102, 26],
       "accounts": [
         {
           "name": "source_token"
@@ -39,25 +30,8 @@
               {
                 "kind": "const",
                 "value": [
-                  101,
-                  120,
-                  116,
-                  114,
-                  97,
-                  45,
-                  97,
-                  99,
-                  99,
-                  111,
-                  117,
-                  110,
-                  116,
-                  45,
-                  109,
-                  101,
-                  116,
-                  97,
-                  115
+                  101, 120, 116, 114, 97, 45, 97, 99, 99, 111, 117, 110, 116,
+                  45, 109, 101, 116, 97, 115
                 ]
               },
               {
@@ -76,9 +50,7 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [
-                  99
-                ]
+                "value": [99]
               },
               {
                 "kind": "account",
@@ -97,9 +69,7 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [
-                  99
-                ]
+                "value": [99]
               },
               {
                 "kind": "account",
@@ -122,16 +92,7 @@
     },
     {
       "name": "initialize_extra_account_meta_list",
-      "discriminator": [
-        43,
-        34,
-        13,
-        49,
-        167,
-        88,
-        235,
-        235
-      ],
+      "discriminator": [43, 34, 13, 49, 167, 88, 235, 235],
       "accounts": [
         {
           "name": "payer",
@@ -146,25 +107,8 @@
               {
                 "kind": "const",
                 "value": [
-                  101,
-                  120,
-                  116,
-                  114,
-                  97,
-                  45,
-                  97,
-                  99,
-                  99,
-                  111,
-                  117,
-                  110,
-                  116,
-                  45,
-                  109,
-                  101,
-                  116,
-                  97,
-                  115
+                  101, 120, 116, 114, 97, 45, 97, 99, 99, 111, 117, 110, 116,
+                  45, 109, 101, 116, 97, 115
                 ]
               },
               {

@@ -1,14 +1,56 @@
-import { NFTRole } from "@/lib/constants";
+import { CONSUMER_ROLE_NFT_METADATA, MINTER_ROLE_NFT_METADATA, NFTRole } from "@/lib/constants";
 import { useMutation } from "@tanstack/react-query";
-
+import { address } from '@solana/kit'
+import { useRwaProgram } from "./useProgram";
+import { toast } from "react-toastify";
 type UseIssueRoleNftParams = {
   role: NFTRole;
 };
 const useIssueRoleNft = (to: string) => {
+  const program = useRwaProgram();
   return useMutation({
     mutationKey: ["issueRoleNft", to],
     mutationFn: async ({ role }: UseIssueRoleNftParams) => {
-      alert(`Issuing ${role} role NFT to ${to}`);
+      toast.promise(
+        new Promise(async (resolve, reject) => {
+          try {
+            if (role === NFTRole.MINTER) {
+              const result = await program.methods
+                .issueMinterCert(
+                  MINTER_ROLE_NFT_METADATA.name,
+                  MINTER_ROLE_NFT_METADATA.symbol,
+                  MINTER_ROLE_NFT_METADATA.uri
+                )
+                .accounts({
+                  receiver: address(to),
+                })
+                .rpc()
+
+              resolve(result);
+            }
+            else {
+              const result = await program.methods
+                .issueConsumerCert(
+                  CONSUMER_ROLE_NFT_METADATA.name,
+                  CONSUMER_ROLE_NFT_METADATA.symbol,
+                  CONSUMER_ROLE_NFT_METADATA.uri
+                )
+                .accounts({
+                  receiver: address(to),
+                })
+                .rpc()
+
+              resolve(result);
+            }
+          } catch (error) {
+            reject(error);
+          }
+        })
+        , {
+          pending: `Issuing ${role} role NFT...`,
+          success: `${role} role NFT issued successfully`,
+          error: 'Error issuing role NFT'
+        });
     },
   });
 };

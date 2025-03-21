@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/token_transfer_hook.json`.
  */
 export type TokenTransferHook = {
-  "address": "3iSipiR8nmukvNan7ZWDJ2Cx7V7EmHPXLkQmsN1nrEna",
+  "address": "6EKeiVFzZQuo85Ft72nyTQ2vFM5iTGE3fxxvt2LkMvV4",
   "metadata": {
     "name": "tokenTransferHook",
     "version": "0.1.0",
