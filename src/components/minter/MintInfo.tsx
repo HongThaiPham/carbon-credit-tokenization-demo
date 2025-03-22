@@ -13,6 +13,7 @@ import { Plus } from "lucide-react";
 import IssueNftForm from "../admin/IssueNftForm";
 import { NFTRole } from "@/lib/constants";
 import UserRoleAccounts from "../admin/UserRoleAccounts";
+import MintMoreRwaTokenModal from "./MintMoreRwaTokenModal";
 type Props = {
   address: string;
 };
@@ -55,6 +56,9 @@ const MintInfo: React.FC<Props> = ({ address }) => {
                   {stringCompact(data.metadata?.uri, 20)}
                 </a>
               </strong>
+            </div>
+            <div className="flex justify-end items-center">
+              <MintMoreRwaTokenModal />
             </div>
           </div>
         </CardContent>

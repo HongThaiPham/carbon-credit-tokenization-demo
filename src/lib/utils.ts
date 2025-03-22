@@ -26,3 +26,23 @@ export const getExplorerUrl = (
   }
   return `https://explorer.solana.com/${path}/${addressOrTx}`;
 };
+
+export const convertMetadataToObject = (
+  data: (readonly [string, string])[] | undefined
+): Record<string, number> => {
+  const result: Record<string, number> = {};
+
+  if (!data) return result;
+
+  try {
+    data.forEach(([key, value]) => {
+      if (key && value !== undefined) {
+        result[key] = parseInt(value, 10) || 0;
+      }
+    });
+  } catch (error) {
+    console.error("Error parsing metadata:", error);
+  }
+
+  return result;
+};
