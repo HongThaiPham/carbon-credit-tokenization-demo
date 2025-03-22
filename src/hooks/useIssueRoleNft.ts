@@ -9,6 +9,7 @@ import { address } from "@solana/kit";
 import { useRwaProgram } from "./useProgram";
 import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { fromLegacyPublicKey } from "@solana/compat";
 type UseIssueRoleNftParams = {
   role: NFTRole;
 };
@@ -49,6 +50,8 @@ const useIssueRoleNft = (to: string) => {
                 )
                 .accounts({
                   receiver: address(to),
+                  minter: fromLegacyPublicKey(publicKey),
+                  payer: fromLegacyPublicKey(publicKey),
                 })
                 .rpc();
 

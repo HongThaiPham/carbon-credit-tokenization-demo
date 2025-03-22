@@ -5,6 +5,7 @@ import IssueRoleNftButton from "./IssueRoleNftButton";
 import { isAddress } from "@solana/kit";
 import { NFTRole } from "@/lib/constants";
 type Props = {
+  mint?: string;
   role: NFTRole;
 };
 const IssueNftForm: React.FC<Props> = ({ role }) => {

@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { addressCompact, getExplorerUrl } from "@/lib/utils";
+import { stringCompact, getExplorerUrl } from "@/lib/utils";
 import useIssueRoleNft from "@/hooks/useIssueRoleNft";
 import { NFTRole } from "@/lib/constants";
 import { useQueryClient } from "@tanstack/react-query";
@@ -45,7 +45,7 @@ const IssueRoleNftButton: React.FC<Props> = ({ to, disabled, role }) => {
               target="_blank"
               className="text-green-500"
             >
-              {addressCompact(to)}
+              {stringCompact(to)}
             </a>
             ?
           </DialogTitle>
