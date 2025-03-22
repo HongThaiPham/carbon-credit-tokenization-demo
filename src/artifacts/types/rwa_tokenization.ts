@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/rwa_tokenization.json`.
  */
 export type RwaTokenization = {
-  "address": "49n7Dx4QzjqkMhx9HWrvN3g84eoqBR3oM9BU14zJvYu4",
+  "address": "GuW1beq8vaWFxcyG2Ex7un6NJ7jhv2vqXazRZ2D24BwH",
   "metadata": {
     "name": "rwaTokenization",
     "version": "0.1.0",
@@ -1163,6 +1163,10 @@ export type RwaTokenization = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "rwaMint",
+            "type": "pubkey"
+          },
           {
             "name": "mint",
             "type": "pubkey"

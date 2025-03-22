@@ -6,9 +6,10 @@ import { KeyIcon, UserIcon } from "lucide-react";
 import React from "react";
 type Props = {
   role: NFTRole;
+  mint?: string;
 };
-const UserRoleAccounts: React.FC<Props> = ({ role }) => {
-  const { data } = useUserRoleAccounts(role);
+const UserRoleAccounts: React.FC<Props> = ({ role, mint }) => {
+  const { data } = useUserRoleAccounts(role, mint);
   return (
     <div>
       <div className="flex justify-between items-center p-2 bg-muted rounded-md">

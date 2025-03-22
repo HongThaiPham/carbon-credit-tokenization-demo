@@ -2,8 +2,9 @@
 import { NFTRole } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import { useRwaProgram } from "./useProgram";
+import { web3 } from "@coral-xyz/anchor";
 
-const useUserRoleAccounts = (role: NFTRole) => {
+const useUserRoleAccounts = (role: NFTRole, mint?: string) => {
   const program = useRwaProgram();
   return useQuery({
     queryKey: ["userRoleAccounts", role],
@@ -12,8 +13,17 @@ const useUserRoleAccounts = (role: NFTRole) => {
         const accounts = await program.account.minterController.all();
         return accounts.slice(0, 10);
       } else {
-        const accounts = await program.account.consumerController.all();
-        return accounts.slice(0, 10);
+        if (!mint) return [];
+        const accounts = await program.account.consumerController.all([
+          {
+            memcmp: {
+              offset: 8,
+              bytes: new web3.PublicKey(mint).toBase58(),
+              encoding: "base58",
+            },
+          },
+        ]);
+        return accounts;
       }
     },
   });

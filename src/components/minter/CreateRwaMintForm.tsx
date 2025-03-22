@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Plus } from "lucide-react";
+import { Loader2, Plus, SendIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Checkbox } from "../ui/checkbox";
@@ -16,7 +16,7 @@ const CreateRwaMintForm = () => {
     transferFeeBasisPoints: 0,
     maximumFee: 0,
   });
-  const { mutateAsync } = useInitRwaToken();
+  const { mutateAsync, isPending } = useInitRwaToken();
 
   const handleCreateToken = async () => {
     try {
@@ -116,7 +116,16 @@ const CreateRwaMintForm = () => {
             />
           </div>
         ) : null}
-        <Button className="w-full" onClick={handleCreateToken}>
+        <Button
+          className="w-full"
+          onClick={handleCreateToken}
+          disabled={isPending}
+        >
+          {isPending ? (
+            <Loader2 className="animate-spin size-3" />
+          ) : (
+            <SendIcon className="size-3" />
+          )}
           Create Token
         </Button>
       </CardContent>

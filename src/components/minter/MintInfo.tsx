@@ -71,7 +71,7 @@ const MintInfo: React.FC<Props> = ({ address }) => {
               <IssueNftForm role={NFTRole.CONSUMER} />
             </CardContent>
           </Card>
-          <UserRoleAccounts role={NFTRole.CONSUMER} />
+          <UserRoleAccounts role={NFTRole.CONSUMER} mint={address} />
         </>
       ) : null}
     </>

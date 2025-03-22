@@ -12,7 +12,7 @@ const SolanaProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const network = WalletAdapterNetwork.Devnet;
   const wallets = useMemo(() => [], []);
   const endpoint = useMemo(
-    () => process.env.RPC_URL ?? clusterApiUrl(network),
+    () => process.env.NEXT_PUBLIC_RPC_URL ?? clusterApiUrl(network),
     [network]
   );
   return (
