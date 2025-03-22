@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { getTokenMetadata } from "@solana/spl-token";
 import { BN, web3 } from "@coral-xyz/anchor";
 import { convertMetadataToObject } from "@/lib/utils";
-type MintRwaTokenParams = { amount: number; address: string };
+type MintRwaTokenParams = { amount: number };
 const useMintRwaToken = (mint: string) => {
   const program = useRwaProgram();
   const { publicKey } = useWallet();

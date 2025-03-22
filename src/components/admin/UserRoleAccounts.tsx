@@ -4,6 +4,7 @@ import { NFTRole } from "@/lib/constants";
 import { getExplorerUrl } from "@/lib/utils";
 import { KeyIcon, UserIcon } from "lucide-react";
 import React from "react";
+import UpdateCreditModal from "./UpdateCreditModal";
 type Props = {
   role: NFTRole;
   mint?: string;
@@ -28,10 +29,13 @@ const UserRoleAccounts: React.FC<Props> = ({ role, mint }) => {
                 <KeyIcon className="size-4" />
                 {account.account.mint.toString()}
               </a>
-              <span className="text-muted-foreground flex items-center gap-1">
+              <div className="text-muted-foreground flex items-center gap-3">
                 <UserIcon className="size-4" />
                 {account.account.user.toString()}
-              </span>
+                {role === NFTRole.MINTER ? (
+                  <UpdateCreditModal minter={account.account.user.toString()} />
+                ) : null}
+              </div>
             </div>
           </div>
         ))}
