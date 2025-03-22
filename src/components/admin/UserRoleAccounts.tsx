@@ -18,7 +18,7 @@ const UserRoleAccounts: React.FC<Props> = ({ role }) => {
       <div>
         {data?.map((account) => (
           <div key={account.publicKey.toString()}>
-            <div className="flex justify-between items-center p-2 bg-muted rounded-md text-sm">
+            <div className="flex justify-between items-center p-2 text-sm">
               <a
                 href={getExplorerUrl(account.account.mint.toString())}
                 target="_blank"

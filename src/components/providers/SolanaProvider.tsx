@@ -11,7 +11,10 @@ import { clusterApiUrl } from "@solana/web3.js";
 const SolanaProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const network = WalletAdapterNetwork.Devnet;
   const wallets = useMemo(() => [], []);
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const endpoint = useMemo(
+    () => process.env.RPC_URL ?? clusterApiUrl(network),
+    [network]
+  );
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>

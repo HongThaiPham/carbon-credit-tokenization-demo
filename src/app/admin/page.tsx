@@ -17,7 +17,7 @@ const AdminPage = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <IssueNftForm />
+          <IssueNftForm role={NFTRole.MINTER} />
         </CardContent>
       </Card>
 

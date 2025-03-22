@@ -1,16 +1,27 @@
-import { CONSUMER_ROLE_NFT_METADATA, MINTER_ROLE_NFT_METADATA, NFTRole } from "@/lib/constants";
+"use client";
+import {
+  CONSUMER_ROLE_NFT_METADATA,
+  MINTER_ROLE_NFT_METADATA,
+  NFTRole,
+} from "@/lib/constants";
 import { useMutation } from "@tanstack/react-query";
-import { address } from '@solana/kit'
+import { address } from "@solana/kit";
 import { useRwaProgram } from "./useProgram";
 import { toast } from "react-toastify";
+import { useWallet } from "@solana/wallet-adapter-react";
 type UseIssueRoleNftParams = {
   role: NFTRole;
 };
 const useIssueRoleNft = (to: string) => {
   const program = useRwaProgram();
+  const { publicKey } = useWallet();
   return useMutation({
     mutationKey: ["issueRoleNft", to],
     mutationFn: async ({ role }: UseIssueRoleNftParams) => {
+      if (!publicKey) {
+        toast.error("Wallet not connected");
+        return;
+      }
       return toast.promise(
         new Promise(async (resolve, reject) => {
           try {
@@ -25,11 +36,10 @@ const useIssueRoleNft = (to: string) => {
                 .accounts({
                   receiver: address(to),
                 })
-                .rpc()
+                .rpc();
 
               resolve(result);
-            }
-            else {
+            } else {
               console.info("Issuing CONSUMER role NFT...");
               const result = await program.methods
                 .issueConsumerCert(
@@ -40,19 +50,21 @@ const useIssueRoleNft = (to: string) => {
                 .accounts({
                   receiver: address(to),
                 })
-                .rpc()
+                .rpc();
 
               resolve(result);
             }
           } catch (error) {
+            console.error("Error issuing role NFT", error);
             reject(error);
           }
-        })
-        , {
+        }),
+        {
           pending: `Issuing ${role} role NFT...`,
           success: `${role} role NFT issued successfully`,
-          error: 'Error issuing role NFT'
-        });
+          error: "Error issuing role NFT",
+        }
+      );
     },
   });
 };

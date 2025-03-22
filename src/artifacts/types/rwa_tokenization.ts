@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/rwa_tokenization.json`.
  */
 export type RwaTokenization = {
-  "address": "Ae4Kt2dtTVNi2H4qgsoD3u1a7K5yjxZUaVVt1XPviMsv",
+  "address": "49n7Dx4QzjqkMhx9HWrvN3g84eoqBR3oM9BU14zJvYu4",
   "metadata": {
     "name": "rwaTokenization",
     "version": "0.1.0",
@@ -257,9 +257,53 @@ export type RwaTokenization = {
       ],
       "accounts": [
         {
-          "name": "authority",
+          "name": "payer",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "minter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "receiver"
+        },
+        {
+          "name": "minterNftMint",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "minter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "rwaMint",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  99,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "minterNftMint"
+              }
+            ]
+          }
         },
         {
           "name": "consumerController",
@@ -280,9 +324,6 @@ export type RwaTokenization = {
           }
         },
         {
-          "name": "receiver"
-        },
-        {
           "name": "mint",
           "writable": true,
           "pda": {
@@ -292,6 +333,10 @@ export type RwaTokenization = {
                 "value": [
                   99
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "rwaMint"
               },
               {
                 "kind": "account",
@@ -401,7 +446,28 @@ export type RwaTokenization = {
         {
           "name": "authority",
           "writable": true,
-          "signer": true
+          "signer": true,
+          "relations": [
+            "configAccount"
+          ]
+        },
+        {
+          "name": "configAccount",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
         },
         {
           "name": "minterController",
