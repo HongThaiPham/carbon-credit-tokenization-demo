@@ -5,6 +5,7 @@ import { getExplorerUrl } from "@/lib/utils";
 import { KeyIcon, UserIcon } from "lucide-react";
 import React from "react";
 import UpdateCreditModal from "./UpdateCreditModal";
+import CreateAtaAccountForUser from "../minter/CreateAtaAccountForUser";
 type Props = {
   role: NFTRole;
   mint?: string;
@@ -34,7 +35,12 @@ const UserRoleAccounts: React.FC<Props> = ({ role, mint }) => {
                 {account.account.user.toString()}
                 {role === NFTRole.MINTER ? (
                   <UpdateCreditModal minter={account.account.user.toString()} />
-                ) : null}
+                ) : (
+                  <CreateAtaAccountForUser
+                    mint={mint!}
+                    to={account.account.user.toString()}
+                  />
+                )}
               </div>
             </div>
           </div>
