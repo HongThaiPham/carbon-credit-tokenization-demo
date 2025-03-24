@@ -58,7 +58,7 @@ const MintInfo: React.FC<Props> = ({ address }) => {
               </strong>
             </div>
             <div className="flex justify-end items-center">
-              <MintMoreRwaTokenModal />
+              <MintMoreRwaTokenModal mint={address} />
             </div>
           </div>
         </CardContent>

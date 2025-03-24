@@ -617,6 +617,9 @@ export type RwaTokenization = {
           "signer": true
         },
         {
+          "name": "receiver"
+        },
+        {
           "name": "minterController",
           "pda": {
             "seeds": [
@@ -672,13 +675,13 @@ export type RwaTokenization = {
           }
         },
         {
-          "name": "creatorTokenAccount",
+          "name": "receiverTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "creator"
+                "path": "receiver"
               },
               {
                 "kind": "account",

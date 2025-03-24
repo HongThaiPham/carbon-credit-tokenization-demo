@@ -77,54 +77,10 @@ export type TokenTransferHook = {
           "name": "rwaProgram"
         },
         {
-          "name": "sourceMintNft",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              },
-              {
-                "kind": "account",
-                "path": "source_token.owner"
-              }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "rwaProgram"
-            }
-          }
+          "name": "sourceMintNft"
         },
         {
-          "name": "destinationMintNft",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              },
-              {
-                "kind": "account",
-                "path": "destination_token.owner"
-              }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "rwaProgram"
-            }
-          }
+          "name": "destinationMintNft"
         }
       ],
       "args": [

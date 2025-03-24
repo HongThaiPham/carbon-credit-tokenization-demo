@@ -15,7 +15,7 @@ const useRwaTokenInitialized = (minter?: string) => {
   const { connection } = useConnection();
 
   return useQuery({
-    queryKey: ["rwaToken"],
+    queryKey: ["rwaToken", minter],
     queryFn: async () => {
       if (!minter) {
         return false;

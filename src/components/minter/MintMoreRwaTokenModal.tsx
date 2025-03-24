@@ -18,7 +18,6 @@ type Props = {
 };
 const MintMoreRwaTokenModal: React.FC<Props> = ({ mint }) => {
   const [open, setOpen] = useState(false);
-  // const [address, setAddress] = useState("");
   const [amount, setAmount] = useState(0);
   const { mutateAsync, isPending } = useMintRwaToken(mint);
   const handler = async () => {

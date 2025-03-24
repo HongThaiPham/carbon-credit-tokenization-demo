@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRwaProgram } from "./useProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ const useUpdateMinterCredit = (minter: string) => {
   const program = useRwaProgram();
   const { data } = useMinterNftMetadata(minter);
   const { publicKey } = useWallet();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["updateMinterCredit", minter],
     mutationFn: async (amount: number) => {
@@ -34,6 +35,9 @@ const useUpdateMinterCredit = (minter: string) => {
                 receiver: minter,
               })
               .rpc();
+            await queryClient.invalidateQueries({
+              queryKey: ["minterNftMetadata", minter],
+            });
             resolve(result);
           } catch (error) {
             reject(error);

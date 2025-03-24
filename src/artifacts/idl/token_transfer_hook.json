@@ -71,54 +71,10 @@
           "name": "rwa_program"
         },
         {
-          "name": "source_mint_nft",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              },
-              {
-                "kind": "account",
-                "path": "source_token.owner"
-              }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "rwa_program"
-            }
-          }
+          "name": "source_mint_nft"
         },
         {
-          "name": "destination_mint_nft",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              },
-              {
-                "kind": "account",
-                "path": "destination_token.owner"
-              }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "rwa_program"
-            }
-          }
+          "name": "destination_mint_nft"
         }
       ],
       "args": [

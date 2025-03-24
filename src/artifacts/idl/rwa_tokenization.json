@@ -611,6 +611,9 @@
           "signer": true
         },
         {
+          "name": "receiver"
+        },
+        {
           "name": "minter_controller",
           "pda": {
             "seeds": [
@@ -666,13 +669,13 @@
           }
         },
         {
-          "name": "creator_token_account",
+          "name": "receiver_token_account",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "creator"
+                "path": "receiver"
               },
               {
                 "kind": "account",
