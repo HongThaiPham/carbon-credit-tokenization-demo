@@ -1,57 +1,32 @@
 "use client";
 import React from "react";
 import { Button } from "../ui/button";
-import {
-  createAssociatedTokenAccountInstruction,
-  getAssociatedTokenAddressSync,
-  TOKEN_2022_PROGRAM_ID,
-} from "@solana/spl-token";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { web3 } from "@coral-xyz/anchor";
+import useCreateAtaAccount from "@/hooks/useCreateAtaAccount";
+import { Loader2, SaveIcon } from "lucide-react";
 type Props = {
   mint: string;
   to: string;
 };
 const CreateAtaAccountForUser: React.FC<Props> = ({ mint, to }) => {
-  const { connection } = useConnection();
-  const { publicKey, sendTransaction } = useWallet();
+  const { mutateAsync, isPending } = useCreateAtaAccount(mint, to);
   const handler = async () => {
-    if (!publicKey) {
-      return;
-    }
-    const mintPublicKey = new web3.PublicKey(mint);
-    const toPublicKey = new web3.PublicKey(to);
-    const ata = getAssociatedTokenAddressSync(
-      mintPublicKey,
-      toPublicKey,
-      false,
-      TOKEN_2022_PROGRAM_ID
-    );
-
-    const transaction = new web3.Transaction();
-    transaction.add(
-      createAssociatedTokenAccountInstruction(
-        publicKey,
-        ata,
-        toPublicKey,
-        mintPublicKey,
-        TOKEN_2022_PROGRAM_ID
-      )
-    );
-    const recentBlockhash = await connection.getLatestBlockhash();
-    transaction.recentBlockhash = recentBlockhash.blockhash;
-    transaction.feePayer = publicKey;
-
-    const signature = await sendTransaction(transaction, connection);
-
-    const tx = await connection.confirmTransaction({
-      signature,
-      ...recentBlockhash,
-    });
-
-    console.log(tx);
+    await mutateAsync();
   };
-  return <Button onClick={handler}>Create ATA Account</Button>;
+  return (
+    <Button
+      onClick={handler}
+      disabled={isPending}
+      className="space-x-2"
+      size={"sm"}
+    >
+      {isPending ? (
+        <Loader2 className="animate-spin size-3" />
+      ) : (
+        <SaveIcon className="size-3" />
+      )}
+      Create ATA Account
+    </Button>
+  );
 };
 
 export default CreateAtaAccountForUser;
