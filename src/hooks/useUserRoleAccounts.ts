@@ -11,7 +11,7 @@ const useUserRoleAccounts = (role: NFTRole, mint?: string) => {
     queryFn: async () => {
       if (role === NFTRole.MINTER) {
         const accounts = await program.account.minterController.all();
-        return accounts.slice(0, 10);
+        return accounts;
       } else {
         if (!mint) return [];
         const accounts = await program.account.consumerController.all([
