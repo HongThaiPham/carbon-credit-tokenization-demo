@@ -27,28 +27,42 @@ const useCreateAtaAccount = (mint: string, to: string) => {
         TOKEN_2022_PROGRAM_ID
       );
 
-      const transaction = new web3.Transaction();
-      transaction.add(
-        createAssociatedTokenAccountInstruction(
-          publicKey,
-          ata,
-          toPublicKey,
-          mintPublicKey,
-          TOKEN_2022_PROGRAM_ID
-        )
+      toast.promise(
+        new Promise(async (resolve, reject) => {
+          try {
+            const transaction = new web3.Transaction();
+            transaction.add(
+              createAssociatedTokenAccountInstruction(
+                publicKey,
+                ata,
+                toPublicKey,
+                mintPublicKey,
+                TOKEN_2022_PROGRAM_ID
+              )
+            );
+            const recentBlockhash = await connection.getLatestBlockhash();
+            transaction.recentBlockhash = recentBlockhash.blockhash;
+            transaction.feePayer = publicKey;
+
+            const signature = await sendTransaction(transaction, connection);
+
+            const tx = await connection.confirmTransaction({
+              signature,
+              ...recentBlockhash,
+            });
+
+            resolve({ tx, signature });
+          } catch (error) {
+            console.error("Error creating ATA account", error);
+            reject(error);
+          }
+        }),
+        {
+          pending: "Creating associated token account...",
+          success: "Associated token account created",
+          error: "Error creating associated token account",
+        }
       );
-      const recentBlockhash = await connection.getLatestBlockhash();
-      transaction.recentBlockhash = recentBlockhash.blockhash;
-      transaction.feePayer = publicKey;
-
-      const signature = await sendTransaction(transaction, connection);
-
-      const tx = await connection.confirmTransaction({
-        signature,
-        ...recentBlockhash,
-      });
-
-      return { tx, signature };
     },
   });
 };
