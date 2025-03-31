@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRwaProgram, useTransferHookProgram } from "./useProgram";
 import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -20,6 +20,7 @@ const useInitRwaToken = () => {
   const hookProgram = useTransferHookProgram();
   const { publicKey } = useWallet();
   const addressEncoder = getAddressEncoder();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["initRwaToken", publicKey],
     mutationFn: async (payload: InitRwaTokenParams) => {
@@ -78,7 +79,9 @@ const useInitRwaToken = () => {
             }
 
             const result = await method.rpc();
-
+            await queryClient.invalidateQueries({
+              queryKey: ["tokenMetadata", carbonCreditsMintAddress],
+            });
             resolve(result);
           } catch (error) {
             console.error("Error issuing role NFT", error);
