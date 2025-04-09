@@ -61,7 +61,7 @@ const useMintRwaToken = (mint: string) => {
               })
               .rpc();
             await queryClient.invalidateQueries({
-              queryKey: ["rwaToken", publicKey?.toString()],
+              queryKey: ["tokenMetadata", publicKey?.toString()],
             });
             resolve(result);
           } catch (error) {
