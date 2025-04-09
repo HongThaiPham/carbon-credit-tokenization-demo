@@ -3,19 +3,21 @@ import { NFTRole } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import { useRwaProgram } from "./useProgram";
 import { web3 } from "@coral-xyz/anchor";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-const useUserRoleAccounts = (role: NFTRole, mint?: string) => {
+const useUserRoleAccountsbyUser = (role: NFTRole) => {
+  const { publicKey } = useWallet();
   const program = useRwaProgram();
   return useQuery({
-    queryKey: ["userRoleAccounts", mint, role],
+    queryKey: ["userRoleAccounts", publicKey, role],
     queryFn: async () => {
-      if (!mint) return [];
+      if (!publicKey) return [];
       if (role === NFTRole.MINTER) {
         const accounts = await program.account.minterController.all([
           {
             memcmp: {
-              offset: 8,
-              bytes: new web3.PublicKey(mint).toBase58(),
+              offset: 8 + 32 + 32,
+              bytes: new web3.PublicKey(publicKey).toBase58(),
               encoding: "base58",
             },
           },
@@ -30,8 +32,8 @@ const useUserRoleAccounts = (role: NFTRole, mint?: string) => {
         const accounts = await program.account.consumerController.all([
           {
             memcmp: {
-              offset: 8,
-              bytes: new web3.PublicKey(mint).toBase58(),
+              offset: 8 + 32 + 32,
+              bytes: new web3.PublicKey(publicKey).toBase58(),
               encoding: "base58",
             },
           },
@@ -44,7 +46,8 @@ const useUserRoleAccounts = (role: NFTRole, mint?: string) => {
         }));
       }
     },
+    enabled: !!publicKey,
   });
 };
 
-export default useUserRoleAccounts;
+export default useUserRoleAccountsbyUser;

@@ -30,7 +30,7 @@ const CreateRwaMintForm = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Plus className="h-5 w-5" /> Create New Token
+          <Plus className="h-5 w-5" /> Create New RWA token
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">

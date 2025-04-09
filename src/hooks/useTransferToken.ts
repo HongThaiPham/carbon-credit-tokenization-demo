@@ -92,11 +92,12 @@ const useTransferToken = (mint: string, to: string, amount: number) => {
             });
 
             await queryClient.invalidateQueries({
-              queryKey: ["tokenBalance", mint, to],
+              queryKey: ["tokenBalance", mint],
             });
 
             resolve({ tx, signature });
           } catch (error) {
+            console.error(error);
             reject(error);
           }
         }),

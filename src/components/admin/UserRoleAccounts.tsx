@@ -19,7 +19,7 @@ import NetworkExplorerLink from "../NetworkExplorerLink";
 import TokenBalance from "../TokenBalance";
 type Props = {
   role: NFTRole;
-  mint?: string;
+  mint: string;
 };
 const UserRoleAccounts: React.FC<Props> = ({ role, mint }) => {
   const { data } = useUserRoleAccounts(role, mint);
@@ -49,7 +49,7 @@ const UserRoleAccounts: React.FC<Props> = ({ role, mint }) => {
                     User
                   </span>
                 </TableHead>
-                {mint ? (
+                {role === NFTRole.CONSUMER ? (
                   <TableHead>
                     <span className="flex items-center gap-1 justify-end">
                       <CoinsIcon className="h-4 w-4" />
@@ -62,40 +62,34 @@ const UserRoleAccounts: React.FC<Props> = ({ role, mint }) => {
             </TableHeader>
             <TableBody>
               {data?.map((account) => (
-                <TableRow key={account.publicKey.toString()}>
+                <TableRow key={account.controller}>
                   <TableCell className="font-medium">
-                    <NetworkExplorerLink
-                      addressOrTx={account.account.mint.toString()}
-                    />
+                    <NetworkExplorerLink addressOrTx={account.mint} />
                   </TableCell>
                   <TableCell>
-                    <NetworkExplorerLink
-                      addressOrTx={account.account.user.toString()}
-                    />
+                    <NetworkExplorerLink addressOrTx={account.user} />
                   </TableCell>
-                  {mint ? (
+                  {role === NFTRole.CONSUMER ? (
                     <TableCell className="text-right">
-                      <TokenBalance
-                        account={account.account.user.toString()}
-                        mint={mint}
-                      />
+                      <TokenBalance account={account.user} mint={mint} />
                     </TableCell>
                   ) : null}
                   <TableCell className="text-right">
                     <div className="flex justify-end">
                       {role === NFTRole.MINTER ? (
                         <UpdateCreditModal
-                          minter={account.account.user.toString()}
+                          minter={account.user}
+                          mint={account.rwaMint}
                         />
                       ) : (
                         <div className="flex items-center gap-2">
                           <CreateAtaAccountForUser
                             mint={mint!}
-                            to={account.account.user.toString()}
+                            to={account.user}
                           />
                           <TransferTokenToUser
                             mint={mint!}
-                            receiver={account.account.user.toString()}
+                            receiver={account.user}
                           />
                         </div>
                       )}

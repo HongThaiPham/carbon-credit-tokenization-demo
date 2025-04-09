@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRwaProgram } from "./useProgram";
 import { fromLegacyPublicKey } from "@solana/compat";
-import { getAddressEncoder, getProgramDerivedAddress } from "@solana/kit";
+import {
+  address,
+  getAddressEncoder,
+  getProgramDerivedAddress,
+} from "@solana/kit";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { toast } from "react-toastify";
 import { getTokenMetadata } from "@solana/spl-token";
@@ -25,6 +29,7 @@ const useMintRwaToken = (mint: string) => {
         programAddress: fromLegacyPublicKey(program.programId),
         seeds: [
           Buffer.from("m"),
+          addressEncoder.encode(address(mint)),
           addressEncoder.encode(fromLegacyPublicKey(publicKey)),
         ],
       });
@@ -49,9 +54,10 @@ const useMintRwaToken = (mint: string) => {
             const result = await program.methods
               .mintRwaToken(new BN(payload.amount))
               .accounts({
-                creator: fromLegacyPublicKey(publicKey),
+                minter: fromLegacyPublicKey(publicKey),
                 payer: fromLegacyPublicKey(publicKey),
                 receiver: new web3.PublicKey(publicKey),
+                rwaMint: mint,
               })
               .rpc();
             await queryClient.invalidateQueries({

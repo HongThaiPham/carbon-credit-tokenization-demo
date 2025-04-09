@@ -17,13 +17,14 @@ import { Loader2, SaveIcon } from "lucide-react";
 
 type Props = {
   minter: string;
+  mint: string;
 };
 
-const UpdateCreditModal: React.FC<Props> = ({ minter }) => {
+const UpdateCreditModal: React.FC<Props> = ({ minter, mint }) => {
   const [open, setOpen] = useState(false);
-  const { data } = useMinterNftMetadata(minter);
+  const { data } = useMinterNftMetadata(minter, mint);
   const [amount, setAmount] = useState(0);
-  const { mutateAsync, isPending } = useUpdateMinterCredit(minter);
+  const { mutateAsync, isPending } = useUpdateMinterCredit(minter, mint);
   const handler = async () => {
     await mutateAsync(amount);
     setOpen(false);
@@ -42,7 +43,7 @@ const UpdateCreditModal: React.FC<Props> = ({ minter }) => {
             This actions will update the minting limits for the minter address.
             <br /> Available credit: {data?.availableCredits}
             <br />
-            Minted NFTs: {data?.mintedCredits}
+            Minted token amount: {data?.mintedCredits}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">

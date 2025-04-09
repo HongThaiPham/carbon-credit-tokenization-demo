@@ -5,10 +5,10 @@ import IssueRoleNftButton from "./IssueRoleNftButton";
 import { isAddress } from "@solana/kit";
 import { NFTRole } from "@/lib/constants";
 type Props = {
-  mint?: string;
+  mint: string;
   role: NFTRole;
 };
-const IssueNftForm: React.FC<Props> = ({ role }) => {
+const IssueNftForm: React.FC<Props> = ({ role, mint }) => {
   const [address, setAddress] = useState("");
   return (
     <div className="flex gap-2">
@@ -20,6 +20,7 @@ const IssueNftForm: React.FC<Props> = ({ role }) => {
         to={address}
         disabled={!isAddress(address)}
         role={role}
+        mint={mint}
       />
     </div>
   );

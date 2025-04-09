@@ -12,7 +12,7 @@ import {
 import { getTokenMetadata } from "@solana/spl-token";
 import { useConnection } from "@solana/wallet-adapter-react";
 
-const useMinterNftMetadata = (minter: string) => {
+const useMinterNftMetadata = (minter: string, mint: string) => {
   const program = useRwaProgram();
   const addressEncoder = getAddressEncoder();
   const { connection } = useConnection();
@@ -25,7 +25,11 @@ const useMinterNftMetadata = (minter: string) => {
       }
       const [nftMinterMintAddress] = await getProgramDerivedAddress({
         programAddress: fromLegacyPublicKey(program.programId),
-        seeds: [Buffer.from("m"), addressEncoder.encode(address(minter))],
+        seeds: [
+          Buffer.from("m"),
+          addressEncoder.encode(address(mint)),
+          addressEncoder.encode(address(minter)),
+        ],
       });
 
       const metadata = await getTokenMetadata(

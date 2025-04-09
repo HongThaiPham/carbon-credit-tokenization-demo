@@ -17,29 +17,30 @@ type Props = {
   to: string;
   role: NFTRole;
   disabled?: boolean;
+  mint: string;
 };
-const IssueRoleNftButton: React.FC<Props> = ({ to, disabled, role }) => {
+const IssueRoleNftButton: React.FC<Props> = ({ to, disabled, role, mint }) => {
   const [open, setOpen] = useState(false);
   const { mutateAsync, isPending } = useIssueRoleNft(to);
   const queryClient = useQueryClient();
 
   const handlerIssueRoleNft = useCallback(async () => {
-    await mutateAsync({ role });
+    await mutateAsync({ mint, role });
     setOpen(false);
     await queryClient.invalidateQueries({
-      queryKey: ["userRoleAccounts", role],
+      queryKey: ["userRoleAccounts", mint, role],
     });
-  }, [mutateAsync, queryClient, role]);
+  }, [mint, mutateAsync, queryClient, role]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button disabled={disabled}>Issue {role} role NFT</Button>
+        <Button disabled={disabled}>Grant {role} role</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="leading-8">
-            Are you sure you want to issue a {role} role NFT to{" "}
+            Are you sure you want to grant {role} role to{" "}
             <a
               href={getExplorerUrl(to)}
               target="_blank"
@@ -50,7 +51,7 @@ const IssueRoleNftButton: React.FC<Props> = ({ to, disabled, role }) => {
             ?
           </DialogTitle>
           <DialogDescription>
-            This action will issue a ROLE NFT to the user.
+            This action will grant ROLE to the user.
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center w-full gap-4 justify-end">

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { fromLegacyPublicKey } from "@solana/compat";
 type UseIssueRoleNftParams = {
+  mint: string;
   role: NFTRole;
 };
 const useIssueRoleNft = (to: string) => {
@@ -18,7 +19,7 @@ const useIssueRoleNft = (to: string) => {
   const { publicKey } = useWallet();
   return useMutation({
     mutationKey: ["issueRoleNft", to],
-    mutationFn: async ({ role }: UseIssueRoleNftParams) => {
+    mutationFn: async ({ role, mint }: UseIssueRoleNftParams) => {
       if (!publicKey) {
         toast.error("Wallet not connected");
         return;
@@ -36,6 +37,7 @@ const useIssueRoleNft = (to: string) => {
                 )
                 .accounts({
                   receiver: address(to),
+                  permissionedMint: address(mint),
                 })
                 .rpc();
 
@@ -52,6 +54,7 @@ const useIssueRoleNft = (to: string) => {
                   receiver: address(to),
                   minter: fromLegacyPublicKey(publicKey),
                   payer: fromLegacyPublicKey(publicKey),
+                  rwaMint: address(mint),
                 })
                 .rpc();
 

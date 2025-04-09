@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import useMinterNftMetadata from "./useMinterNftMetadata";
 import { BN } from "@coral-xyz/anchor";
 
-const useUpdateMinterCredit = (minter: string) => {
+const useUpdateMinterCredit = (minter: string, mint: string) => {
   const program = useRwaProgram();
-  const { data } = useMinterNftMetadata(minter);
+  const { data } = useMinterNftMetadata(minter, mint);
   const { publicKey } = useWallet();
   const queryClient = useQueryClient();
   return useMutation({
@@ -33,6 +33,8 @@ const useUpdateMinterCredit = (minter: string) => {
               .updateQuotaCredit(new BN(amount))
               .accounts({
                 receiver: minter,
+                authority: publicKey,
+                permissionedMint: mint,
               })
               .rpc();
             await queryClient.invalidateQueries({

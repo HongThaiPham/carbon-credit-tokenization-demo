@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { TOKEN_METADATA } from "@/lib/constants";
 import { BN } from "@coral-xyz/anchor";
-import { getAddressEncoder, getProgramDerivedAddress } from "@solana/kit";
+import { getProgramDerivedAddress } from "@solana/kit";
 import { fromLegacyPublicKey } from "@solana/compat";
 type InitRwaTokenParams = {
   name: string;
@@ -19,7 +19,7 @@ const useInitRwaToken = () => {
   const program = useRwaProgram();
   const hookProgram = useTransferHookProgram();
   const { publicKey } = useWallet();
-  const addressEncoder = getAddressEncoder();
+  // const addressEncoder = getAddressEncoder();
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["initRwaToken", publicKey],
@@ -33,20 +33,17 @@ const useInitRwaToken = () => {
           try {
             console.info("Initializing RWA token...");
 
-            const [nftMinterMintAddress] = await getProgramDerivedAddress({
-              programAddress: fromLegacyPublicKey(program.programId),
-              seeds: [
-                Buffer.from("m"),
-                addressEncoder.encode(fromLegacyPublicKey(publicKey)),
-              ],
-            });
+            // const [nftMinterMintAddress] = await getProgramDerivedAddress({
+            //   programAddress: fromLegacyPublicKey(program.programId),
+            //   seeds: [
+            //     Buffer.from("m"),
+            //     addressEncoder.encode(fromLegacyPublicKey(publicKey)),
+            //   ],
+            // });
 
             const [carbonCreditsMintAddress] = await getProgramDerivedAddress({
               programAddress: fromLegacyPublicKey(program.programId),
-              seeds: [
-                Buffer.from("cct"),
-                addressEncoder.encode(nftMinterMintAddress),
-              ],
+              seeds: [Buffer.from("cct"), Buffer.from(payload.symbol)],
             });
 
             const method = await program.methods
@@ -60,8 +57,6 @@ const useInitRwaToken = () => {
                 payload.hasFee ? new BN(payload.maximumFee) : new BN(0)
               )
               .accounts({
-                payer: publicKey,
-                creator: publicKey,
                 transferHookProgram: hookProgram.programId,
               });
 
@@ -79,6 +74,9 @@ const useInitRwaToken = () => {
             }
 
             const result = await method.rpc();
+            await queryClient.invalidateQueries({
+              queryKey: ["rwaTokenCreated"],
+            });
             await queryClient.invalidateQueries({
               queryKey: ["tokenMetadata", carbonCreditsMintAddress],
             });
