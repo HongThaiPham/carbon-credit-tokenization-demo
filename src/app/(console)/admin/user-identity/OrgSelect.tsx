@@ -28,7 +28,7 @@ const OrgSelect = () => {
       onValueChange={field.onChange}
     >
       <SelectTrigger className="w-full max-w-xs">
-        <SelectValue placeholder="Token mint" />
+        <SelectValue placeholder="Select organization" />
       </SelectTrigger>
       <SelectContent>
         {data?.map((item) => (

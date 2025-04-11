@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/rwa_tokenization.json`.
  */
 export type RwaTokenization = {
-  address: "8iEcsKoEbmA6Z9UL9QnP9DgrVAF2LYAc3U3QSZK3QLzP";
+  address: "5HMSSNbK5v5VCuReWUxG3mGksuWZmcsu9e9fMygTvyJw";
   metadata: {
     name: "rwaTokenization";
     version: "0.1.0";

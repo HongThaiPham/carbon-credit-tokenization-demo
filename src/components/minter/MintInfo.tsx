@@ -38,6 +38,9 @@ const MintInfo: React.FC<Props> = ({ address }) => {
               Symbol:<strong>{data.metadata?.symbol}</strong>
             </div>
             <div className="flex justify-between">
+              Decimals:<strong>{data.mintInfo.decimals}</strong>
+            </div>
+            <div className="flex justify-between">
               Update authority:{" "}
               <strong> {data.metadata?.updateAuthority?.toString()}</strong>
             </div>

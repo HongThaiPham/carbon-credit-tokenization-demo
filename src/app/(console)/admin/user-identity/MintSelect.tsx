@@ -7,7 +7,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useRwaTokenCreated from "@/hooks/useRwaTokenCreated";
-import React from "react";
+import { stringCompact } from "@/lib/utils";
+import { web3 } from "@coral-xyz/anchor";
+import { getTokenMetadata } from "@solana/spl-token";
+import { useConnection } from "@solana/wallet-adapter-react";
+import React, { useEffect } from "react";
 import { useController } from "react-hook-form";
 
 const MintSelect = () => {
@@ -30,13 +34,7 @@ const MintSelect = () => {
       </SelectTrigger>
       <SelectContent>
         {data?.map((item) => (
-          <SelectItem
-            key={item.rwaMint}
-            value={item.rwaMint}
-            className="capitalize"
-          >
-            {item.rwaMint}
-          </SelectItem>
+          <SelectMintItem key={item.rwaMint} mint={item.rwaMint} />
         ))}
       </SelectContent>
     </Select>
@@ -44,3 +42,27 @@ const MintSelect = () => {
 };
 
 export default MintSelect;
+
+const SelectMintItem = ({ mint }: { mint: string }) => {
+  const { connection } = useConnection();
+  const [metadata, setMetadata] = React.useState<{
+    name: string;
+    symbol: string;
+  }>({
+    name: "",
+    symbol: "",
+  });
+  useEffect(() => {
+    getTokenMetadata(connection, new web3.PublicKey(mint)).then((metadata) => {
+      setMetadata({
+        name: metadata?.name ?? "",
+        symbol: metadata?.symbol ?? "",
+      });
+    });
+  }, [connection, mint]);
+  return (
+    <SelectItem value={mint}>
+      [<b>{metadata.symbol}</b>] {metadata.name} {stringCompact(mint)}
+    </SelectItem>
+  );
+};
