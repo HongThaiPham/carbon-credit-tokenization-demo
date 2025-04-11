@@ -15,9 +15,10 @@ import { BuildingIcon } from "lucide-react";
 import React from "react";
 import { getQuotaItem } from "../../_actions/quota.action";
 import NetworkExplorerLink from "@/components/NetworkExplorerLink";
+import SkeletonWapper from "@/components/SkeletonWapper";
 
 const IdentityDataTable = () => {
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["identity-data"],
     queryFn: getQuotaItem,
   });
@@ -30,44 +31,46 @@ const IdentityDataTable = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableCaption></TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ORG ID</TableHead>
-              <TableHead>ORG NAME</TableHead>
-              <TableHead>ORG WALLET</TableHead>
-              <TableHead>CARBON TOKENN MINT</TableHead>
-              <TableHead className="text-right">CREDIT AMOUNT</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data?.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.org_name}</TableCell>
-                <TableCell>
-                  {item.wallet ? (
-                    <NetworkExplorerLink addressOrTx={item.wallet} />
-                  ) : (
-                    "N/A"
-                  )}
-                </TableCell>
-                <TableCell>
-                  {item.mint ? (
-                    <NetworkExplorerLink addressOrTx={item.mint} />
-                  ) : (
-                    "N/A"
-                  )}
-                </TableCell>
-
-                <TableCell className="flex justify-end">
-                  {item.credit_amount ?? 0}
-                </TableCell>
+        <SkeletonWapper isLoading={isPending}>
+          <Table>
+            <TableCaption></TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ORG ID</TableHead>
+                <TableHead>ORG NAME</TableHead>
+                <TableHead>ORG WALLET</TableHead>
+                <TableHead>CARBON TOKENN MINT</TableHead>
+                <TableHead className="text-right">CREDIT AMOUNT</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data?.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.org_name}</TableCell>
+                  <TableCell>
+                    {item.wallet ? (
+                      <NetworkExplorerLink addressOrTx={item.wallet} />
+                    ) : (
+                      "N/A"
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {item.mint ? (
+                      <NetworkExplorerLink addressOrTx={item.mint} />
+                    ) : (
+                      "N/A"
+                    )}
+                  </TableCell>
+
+                  <TableCell className="flex justify-end">
+                    {item.credit_amount ?? 0}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </SkeletonWapper>
       </CardContent>
     </Card>
   );
