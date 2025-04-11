@@ -20,6 +20,7 @@ import { isAddress } from "@solana/kit";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateQuotaIdentity } from "../../_actions/quota.action";
 import { toast } from "react-toastify";
+import { Loader2, SaveIcon } from "lucide-react";
 const formSchema = z.object({
   id: z.string(),
   wallet: z.string(),
@@ -30,7 +31,7 @@ type FormSchemaType = z.infer<typeof formSchema>;
 
 const UserIdentityForm = () => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["user-identity"],
     mutationFn: async (data: FormSchemaType) => {
       await toast.promise(
@@ -127,7 +128,14 @@ const UserIdentityForm = () => {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? (
+            <Loader2 className="animate-spin mr-2" />
+          ) : (
+            <SaveIcon className="mr-2" />
+          )}
+          Save
+        </Button>
       </form>
     </Form>
   );

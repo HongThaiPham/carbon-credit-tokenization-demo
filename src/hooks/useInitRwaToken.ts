@@ -9,6 +9,7 @@ import { fromLegacyPublicKey } from "@solana/compat";
 type InitRwaTokenParams = {
   name: string;
   symbol: string;
+  decimals: number;
   isClose: boolean;
   hasFee: boolean;
   transferFeeBasisPoints?: number;
@@ -50,13 +51,14 @@ const useInitRwaToken = () => {
               .initRwaToken(
                 payload.name,
                 payload.symbol,
+                payload.decimals,
                 TOKEN_METADATA.uri,
                 payload.isClose,
                 payload.hasFee,
                 payload.hasFee ? payload.transferFeeBasisPoints : 0,
                 payload.hasFee ? new BN(payload.maximumFee) : new BN(0)
               )
-              .accounts({
+              .accountsPartial({
                 transferHookProgram: hookProgram.programId,
               });
 
@@ -82,7 +84,7 @@ const useInitRwaToken = () => {
             });
             resolve(result);
           } catch (error) {
-            console.error("Error issuing role NFT", error);
+            console.error("Error initializing RWA token", error);
             reject(error);
           }
         }),

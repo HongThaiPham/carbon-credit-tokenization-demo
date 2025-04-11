@@ -50,7 +50,7 @@ export async function getQuotaItem() {
   const { data, error } = await supabaseServer
     .from("credit-quota")
     .select("*")
-    .order("id", { ascending: true });
+    .order("org_name", { ascending: true });
 
   if (error) {
     console.error("Error fetching quota items:", error);

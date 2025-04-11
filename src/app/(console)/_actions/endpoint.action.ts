@@ -14,7 +14,7 @@ export async function addNewEndpoint(
   });
 }
 
-export async function getEndpointData(id: string) {
+export async function getEndpointDataById(id: string) {
   const { data: endpoint } = await supabaseServer
     .from("endpoints")
     .select("*")

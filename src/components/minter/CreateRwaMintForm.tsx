@@ -95,6 +95,7 @@ const CreateRwaMintForm = () => {
       await mutateAsync({
         name: values.name,
         symbol: values.symbol,
+        decimals: values.decimals ?? 9,
         isClose: values.isClose ?? false,
         hasFee: values.hasFee ?? false,
         transferFeeBasisPoints: values.transferFeeBasisPoints ?? 0,

@@ -1,5 +1,5 @@
 import React from "react";
-import { getEndpointData } from "../(console)/_actions/endpoint.action";
+import { getEndpointDataById } from "../(console)/_actions/endpoint.action";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BuildingIcon } from "lucide-react";
 import {
@@ -21,7 +21,7 @@ const Web2DataTableEditor: React.FC<Props> = async ({ org }) => {
       ? "e074df49-59f4-4eda-a2fe-d6bc687d3d83"
       : "ee4e4ede-3676-47eb-952a-5d22696559b4";
 
-  const { data } = await getEndpointData(id);
+  const { data } = await getEndpointDataById(id);
   return (
     <Card>
       <CardHeader>
