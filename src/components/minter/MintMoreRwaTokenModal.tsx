@@ -33,7 +33,7 @@ const MintMoreRwaTokenModal: React.FC<Props> = ({ mint }) => {
         <DialogHeader>
           <DialogTitle>Mint RWA token</DialogTitle>
           <DialogDescription>
-            This will mint more RWA token to any account
+            This will mint more RWA token to your account
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">

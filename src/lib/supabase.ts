@@ -96,6 +96,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      "mint-transactions": {
+        Row: {
+          amount: string | null;
+          created_at: string;
+          id: string;
+          mint: string | null;
+          token_account: string | null;
+        };
+        Insert: {
+          amount?: string | null;
+          created_at?: string;
+          id: string;
+          mint?: string | null;
+          token_account?: string | null;
+        };
+        Update: {
+          amount?: string | null;
+          created_at?: string;
+          id?: string;
+          mint?: string | null;
+          token_account?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;

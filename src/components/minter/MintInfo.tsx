@@ -46,7 +46,11 @@ const MintInfo: React.FC<Props> = ({ address }) => {
             </div>
             <div className="flex justify-between">
               Current supply:
-              <strong>{data.mintInfo.supply.toLocaleString()}</strong>
+              <strong>
+                {(
+                  data.mintInfo.supply / BigInt(10 ** data.mintInfo.decimals)
+                ).toLocaleString()}
+              </strong>
             </div>
             <div className="flex justify-between">
               Token URI:{" "}
