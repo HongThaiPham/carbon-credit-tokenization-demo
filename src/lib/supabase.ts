@@ -38,22 +38,39 @@ export type Database = {
         Row: {
           created_at: string;
           credit_amount: number | null;
+          endpoint_id: string | null;
           id: string;
+          mint: string | null;
           org_name: string | null;
+          wallet: string | null;
         };
         Insert: {
           created_at?: string;
           credit_amount?: number | null;
+          endpoint_id?: string | null;
           id?: string;
+          mint?: string | null;
           org_name?: string | null;
+          wallet?: string | null;
         };
         Update: {
           created_at?: string;
           credit_amount?: number | null;
+          endpoint_id?: string | null;
           id?: string;
+          mint?: string | null;
           org_name?: string | null;
+          wallet?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "credit-quota_endpoint_id_fkey";
+            columns: ["endpoint_id"];
+            isOneToOne: false;
+            referencedRelation: "endpoints";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       endpoints: {
         Row: {

@@ -1,5 +1,5 @@
 {
-  "address": "2Dj6oCznAfdaVuBbbsW1AaNNKxshz1uHa8fbhinXzkuh",
+  "address": "8iEcsKoEbmA6Z9UL9QnP9DgrVAF2LYAc3U3QSZK3QLzP",
   "metadata": {
     "name": "rwa_tokenization",
     "version": "0.1.0",
@@ -84,6 +84,10 @@
         {
           "name": "symbol",
           "type": "string"
+        },
+        {
+          "name": "decimals",
+          "type": "u8"
         },
         {
           "name": "uri",
@@ -754,6 +758,10 @@
     {
       "code": 6004,
       "name": "InsufficientBalance"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidCredit"
     }
   ],
   "types": [

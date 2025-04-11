@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,7 +10,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import useAddNewEndpoint from "@/hooks/useAddNewEndpoint";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, SendIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -23,6 +26,7 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>;
 
 const EndpointForm = () => {
+  const { mutateAsync, isPending } = useAddNewEndpoint();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,7 +38,12 @@ const EndpointForm = () => {
 
   async function onSubmit(values: FormSchemaType) {
     try {
-      console.log("Form submitted with values:", values);
+      await mutateAsync({
+        url: values.url,
+        apiKey: values.apiKey ?? "",
+        accountId: values.accountId ?? "",
+      });
+      form.reset();
     } catch (error) {
       console.error(error);
     }
@@ -94,14 +103,14 @@ const EndpointForm = () => {
           )}
         />
 
-        {/* <Button type="submit" disabled={isPending}>
+        <Button type="submit" disabled={isPending}>
           {isPending ? (
             <Loader2 className="animate-spin" />
           ) : (
             <SendIcon className="h-4 w-4" />
           )}
           Save
-        </Button> */}
+        </Button>
       </form>
     </Form>
   );

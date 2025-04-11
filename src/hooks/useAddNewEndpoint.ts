@@ -1,5 +1,6 @@
-import supabaseServer from "@/lib/supabase.server";
+import { addNewEndpoint } from "@/app/(console)/_actions/endpoint.action";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const useAddNewEndpoint = () => {
   return useMutation({
@@ -9,16 +10,25 @@ const useAddNewEndpoint = () => {
       apiKey: string;
       accountId: string;
     }) => {
-      const { error, data } = await supabaseServer.from("endpoints").insert({
-        url: payload.url,
-        apiKey: payload.apiKey,
-        accountId: payload.accountId,
-      });
+      return toast.promise(
+        new Promise(async (resolve, reject) => {
+          const { error, data } = await addNewEndpoint(
+            payload.url,
+            payload.apiKey,
+            payload.accountId
+          );
 
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data;
+          if (error) {
+            reject(error.message);
+          }
+          resolve(data);
+        }),
+        {
+          pending: "Adding new endpoint...",
+          success: "New endpoint added successfully",
+          error: "Error adding new endpoint",
+        }
+      );
     },
   });
 };

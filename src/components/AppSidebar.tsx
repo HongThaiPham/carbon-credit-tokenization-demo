@@ -46,8 +46,8 @@ const data = {
       icon: PlusCircleIcon,
     },
     {
-      title: "User KYC",
-      url: "/admin/user-kyc",
+      title: "User Idenity",
+      url: "/admin/user-identity",
       icon: UsersIcon,
     },
   ],

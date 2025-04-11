@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/rwa_tokenization.json`.
  */
 export type RwaTokenization = {
-  address: "2Dj6oCznAfdaVuBbbsW1AaNNKxshz1uHa8fbhinXzkuh";
+  address: "8iEcsKoEbmA6Z9UL9QnP9DgrVAF2LYAc3U3QSZK3QLzP";
   metadata: {
     name: "rwaTokenization";
     version: "0.1.0";
@@ -90,6 +90,10 @@ export type RwaTokenization = {
         {
           name: "symbol";
           type: "string";
+        },
+        {
+          name: "decimals";
+          type: "u8";
         },
         {
           name: "uri";
@@ -934,6 +938,10 @@ export type RwaTokenization = {
     {
       code: 6004;
       name: "insufficientBalance";
+    },
+    {
+      code: 6005;
+      name: "invalidCredit";
     }
   ];
   types: [
