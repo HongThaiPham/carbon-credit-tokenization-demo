@@ -1,6 +1,12 @@
 import React from "react";
 import { getEndpointDataById } from "../(console)/_actions/endpoint.action";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { BuildingIcon } from "lucide-react";
 import {
   Table,
@@ -16,12 +22,12 @@ type Props = {
   org: string;
 };
 const Web2DataTableEditor: React.FC<Props> = async ({ org }) => {
-  const id =
-    org === "1"
-      ? "e074df49-59f4-4eda-a2fe-d6bc687d3d83"
-      : "ee4e4ede-3676-47eb-952a-5d22696559b4";
+  // const id =
+  //   org === "1"
+  //     ? "e074df49-59f4-4eda-a2fe-d6bc687d3d83"
+  //     : "ee4e4ede-3676-47eb-952a-5d22696559b4";
 
-  const { data } = await getEndpointDataById(id);
+  const { data, endpoint } = await getEndpointDataById(org);
   return (
     <Card>
       <CardHeader>
@@ -29,6 +35,14 @@ const Web2DataTableEditor: React.FC<Props> = async ({ org }) => {
           <BuildingIcon className="mr-2 size-5" />
           ORG {org} data
         </CardTitle>
+        <CardDescription>
+          Data Endpoint:{" "}
+          {endpoint?.url ? (
+            <a href={endpoint?.url} target="_blank">
+              {endpoint?.url}
+            </a>
+          ) : null}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Table>

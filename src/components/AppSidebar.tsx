@@ -3,6 +3,8 @@
 import * as React from "react";
 import {
   ArrowDownUpIcon,
+  Globe2Icon,
+  GlobeIcon,
   HistoryIcon,
   LayersIcon,
   LeafyGreenIcon,
@@ -77,6 +79,19 @@ const data = {
       icon: RefreshCwIcon,
     },
   ],
+  navMainSimulator: [
+    {
+      title: "Web2 Simulator 1",
+      url: "/web2/e074df49-59f4-4eda-a2fe-d6bc687d3d83",
+      icon: GlobeIcon,
+      isActive: true,
+    },
+    {
+      title: "Web2 Simulator 2",
+      url: "/web2/ee4e4ede-3676-47eb-952a-5d22696559b4",
+      icon: Globe2Icon,
+    },
+  ],
   navSecondary: [
     {
       title: "Support",
@@ -115,6 +130,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain label="ADMIN" items={data.navMain} />
         <NavMain label="MINTER" items={data.navMainForMinter} />
         <NavMain label="TRADER" items={data.navMainForTrader} />
+        <NavMain label="SIMULATOR" items={data.navMainSimulator} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

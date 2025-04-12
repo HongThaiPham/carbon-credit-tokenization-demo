@@ -32,7 +32,9 @@ const MintHistoryTable = () => {
         <TableBody>
           {data?.map((item) => (
             <TableRow key={item.id}>
-              <TableCell className="font-medium">{item.id}</TableCell>
+              <TableCell className="font-medium">
+                {item.id ? <NetworkExplorerLink addressOrTx={item.id} /> : null}
+              </TableCell>
               <TableCell>
                 {item.mint ? (
                   <NetworkExplorerLink addressOrTx={item.mint} />
