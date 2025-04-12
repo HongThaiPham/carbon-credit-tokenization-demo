@@ -76,10 +76,14 @@ const useMintRwaToken = (mint: string) => {
               result,
               mint,
               publicKey?.toString(),
-              BigInt(payload.amount * 10 ** mintInfo.decimals).toString()
+              BigInt(payload.amount * 10 ** mintInfo.decimals).toString(),
+              "MINT"
             );
             await queryClient.invalidateQueries({
               queryKey: ["tokenMetadata", mint],
+            });
+            await queryClient.invalidateQueries({
+              queryKey: ["transactionHistory", "MINT"],
             });
             resolve(result);
           } catch (error) {

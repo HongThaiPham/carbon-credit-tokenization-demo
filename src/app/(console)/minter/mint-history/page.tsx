@@ -1,18 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BadgePlusIcon } from "lucide-react";
+import { HistoryIcon } from "lucide-react";
 import React from "react";
-import MintHistoryTable from "./MintHistoryTable";
+import HistoryTable from "../../../../components/HistoryTable";
 
 const MintHistory = () => {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <BadgePlusIcon className="h-5 w-5" /> Mint transaction history
+          <HistoryIcon className="h-5 w-5" /> Mint transaction history
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <MintHistoryTable />
+        <HistoryTable type="MINT" />
       </CardContent>
     </Card>
   );

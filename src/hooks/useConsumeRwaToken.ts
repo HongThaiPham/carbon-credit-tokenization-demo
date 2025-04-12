@@ -4,6 +4,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { toast } from "react-toastify";
 import { BN, web3 } from "@coral-xyz/anchor";
 import { getMint, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
+import { insertHistory } from "@/app/(console)/_actions/history.action";
 
 const useConsumeRwaToken = () => {
   const program = useRwaProgram();
@@ -41,8 +42,18 @@ const useConsumeRwaToken = () => {
               })
               .signers([nftMint])
               .rpc();
+            await insertHistory(
+              result,
+              mint,
+              publicKey?.toString(),
+              BigInt(amount * 10 ** mintInfo.decimals).toString(),
+              "RETIRE"
+            );
             await queryClient.invalidateQueries({
               queryKey: ["userTokenAccount", publicKey?.toString()],
+            });
+            await queryClient.invalidateQueries({
+              queryKey: ["transactionHistory", "RETIRE"],
             });
             resolve(result);
           } catch (error) {

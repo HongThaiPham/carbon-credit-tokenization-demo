@@ -103,6 +103,7 @@ export type Database = {
           id: string;
           mint: string | null;
           token_account: string | null;
+          type: string;
         };
         Insert: {
           amount?: string | null;
@@ -110,6 +111,7 @@ export type Database = {
           id: string;
           mint?: string | null;
           token_account?: string | null;
+          type?: string;
         };
         Update: {
           amount?: string | null;
@@ -117,6 +119,7 @@ export type Database = {
           id?: string;
           mint?: string | null;
           token_account?: string | null;
+          type?: string;
         };
         Relationships: [];
       };

@@ -10,12 +10,13 @@ import useConsumeRwaToken from "@/hooks/useConsumeRwaToken";
 const ConsumeForm = () => {
   const [mint, setMint] = React.useState<string | null>(null);
   const [amount, setAmount] = React.useState<number>(0);
-  const { mutate, isPending } = useConsumeRwaToken();
+  const { mutateAsync, isPending } = useConsumeRwaToken();
   const handler = async () => {
     if (!mint || amount <= 0) {
       return;
     }
-    await mutate({ mint, amount });
+    await mutateAsync({ mint, amount });
+    setAmount(0);
   };
   return (
     <div className="flex flex-col gap-4">
