@@ -27,6 +27,7 @@ const MintHistoryTable = () => {
             <TableHead>Token Mint</TableHead>
             <TableHead>To</TableHead>
             <TableHead>Amount</TableHead>
+            <TableHead className="text-right">Time</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -46,6 +47,9 @@ const MintHistoryTable = () => {
                 ) : null}
               </TableCell>
               <TableCell>{item.amount}</TableCell>
+              <TableCell className="text-right">
+                {new Date(item.created_at).toLocaleString()}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

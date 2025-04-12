@@ -47,11 +47,20 @@ const SelectMintControl: React.FC<Props> = ({ onChange }) => {
       </Select>
       {mint ? (
         <div>
-          <div>Mint: {mint}</div>
-          <div>Token Account: {tokenAccount?.pubkey.toString()}</div>
           <div>
-            Token Account Balance:
-            {tokenAccount?.account.data.parsed.info.tokenAmount.uiAmountString}
+            Mint: <span>{mint}</span>
+          </div>
+          <div>
+            Token Account: <span>{tokenAccount?.pubkey.toString()}</span>
+          </div>
+          <div>
+            Token Account Balance:{" "}
+            <span>
+              {
+                tokenAccount?.account.data.parsed.info.tokenAmount
+                  .uiAmountString
+              }
+            </span>
           </div>
         </div>
       ) : null}

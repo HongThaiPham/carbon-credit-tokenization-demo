@@ -19,9 +19,15 @@ const ConsumeForm = () => {
   };
   return (
     <div className="flex flex-col gap-4">
+      <Label>Select token to retire</Label>
       <SelectMintControl onChange={setMint} />
 
-      <Label>Amount</Label>
+      <Label>
+        Amount to retire{" "}
+        <span className="text-sm text-gray-500">
+          (You can only retire the amount you have)
+        </span>
+      </Label>
       <Input
         type="number"
         placeholder="Amount"
