@@ -69,7 +69,7 @@ export default function Home() {
                   <img
                     alt="Carbon credit visualization"
                     className="object-cover"
-                    src="/placeholder.svg?height=400&width=600"
+                    src="/CarbonStreaming.jpeg"
                   />
                 </div>
               </div>
